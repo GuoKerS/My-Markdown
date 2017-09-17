@@ -90,6 +90,8 @@ ssh-keygen -C '你的邮箱' -t rsa # 一路回车后会在用户目录～/.ssh/
 ``` zsh
 ssh -v git@github.com # 测试连接是否畅通，首次连接会要求你输入邮箱及密码
 ```
+
+第一次使用必须要上传一个文件
 ## 设置Hexo部署
 在blog目录中找到名为_config.yml的配置文件修改deploy的相关信息
 
