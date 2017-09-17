@@ -62,8 +62,10 @@ hexo init blog #新建博客，Hexo目录下会生产blog文件夹
 cd blog
 sudo cnpm install 
 hexo g #生成、编译
-hexo s #本地预览
+hexo s #本地预览 
 ```
+这时本地搭建已经完成，可以在本机预览自己的博客了
+
 常用的hexo命令：
 
 ``` zsh
@@ -72,6 +74,12 @@ hexo n page "file" #新建文件夹
 hexo clean #清理缓存
 hexo d #部署
 ```
-
-
+**四、部署Hexo至Git**
+进入[GitHub][1]注册账号后新建一个厂库
+![enter description here][2]
+**五、Hexo设置主题**
  
+
+
+  [1]: http://github.com
+  [2]: ./images/1505631092291.jpg
