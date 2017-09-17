@@ -53,4 +53,25 @@ npm install cnpm -g --registry=https://registry.npm.taobao.org #安装cnpm
  4. 安装Hexo
  
  
+
+``` zsh
+mkdir hexo #创建hexo目录
+cd hexo 
+sudo cnpm install hexo-cli -g #安装hexo
+hexo init blog #新建博客，Hexo目录下会生产blog文件夹
+cd blog
+sudo cnpm install 
+hexo g #生成、编译
+hexo s #本地预览
+```
+常用的hexo命令：
+
+``` zsh
+hexo n  "name" #新建文章
+hexo n page "file" #新建文件夹
+hexo clean #清理缓存
+hexo d #部署
+```
+
+
  
