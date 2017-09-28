@@ -1,60 +1,56 @@
 ---
-title: Hexo+GitHub Pages搭建个人博客的一些坑
+grammar_cjkruby: true
 tags: Hexo
-grammar_cjkRuby: true
+date: 2017-09-24 19:48
+status: public
+title: Hexo+GitHub Pages搭建个人博客的一些坑
 ---
+
 ----------
-# 一、前言
+#一、前言#
 由于之前使用的都是免费博客，一段时间又不经常更新导致博客已失效。考虑到能够折腾的种种因素，最终跟风的选择了Hexo来搭建博客，共耗时2天。写下此文的目的是为了记录下我搭建过程中解决的一些坑，给需要的同学做个参考。
 
 
-
-# 二、准备工作
+#二、准备工作#
 先说下搭建Hexo的完整流程：
+1.环境准备
+2.安装Node.js、Git、Npm、Hexo
+3.本地调试、预览Hexo、更换主题
+4.部署至Github Pages
 
-``` flow
-st=>start: 环境准备
-e=>end: 结束
-op1=>operation: 安装Node.js、Git、Npm、Hexo
-op2=>operation: 本地调试、预览Hexo、美化主题、插件安装
-op3=>operation: 部署至Github Pages
-st ->op1 ->op2 ->e
-```
 本机环境：Ubuntu 
+#三、系统环境配置#
 
-# 三、系统环境配置
-
-##  1. 安装Node.js
-
-``` zsh
-sudo apt-get install nodejs #安装node.js
-node -v #显示版本信息
-```
-
-##  2. 安装Git
+##1. 安装Git##
 
 ``` zsh?linenums
 sudo apt-get install git #安装github
 git --version #显示git版本
 ```
+## 2. 安装Node.js##
 
+``` zsh
+sudo apt-get install nodejs #安装node.js
+nodejs -v #显示版本信息
+```
 
- ## 3. 安装Npm（Cnpm）
+## 3. 安装Npm（Cnpm）##
 
 ``` zsh
 sudo apt-get install npm #安装.......
 npm -v #显示........
+#由于node不是最新的，node有个模块叫n，是专门用来管理node.js的版本。因此我们安装n模块，然后升级node.js到最新稳定版，否则后导致后续的cnpm安装不成功
+sudo npm install -g n  #安装n模块
+sudo n stable #升级node.js
 ```
-由于npm在国内的下载速度极慢（下载Hexo我楞是等待了1个多小时！），在查阅资料后我得知使用淘宝分流的npm后速度倍增，因此后续有关npm的命名都将有cnpm代替。
+由于npm在国内的下载速度极慢（下载Hexo我楞是等待了1个多小时！），在查阅资料后我得知使用淘宝分流的npm安装模块会以肉眼可见的速度在进行着！！，因此后续有关npm的命名都将有cnpm代替。
 
 ``` zsh
-npm install cnpm -g --registry=https://registry.npm.taobao.org #安装cnpm
+sudo npm install cnpm -g --registry=https://registry.npm.taobao.org #安装cnpm
 ```
 
- ## 4. 安装Hexo
+## 4. 安装Hexo##
  
- 
-
 ``` zsh
 mkdir hexo #创建hexo目录
 cd hexo 
@@ -67,6 +63,8 @@ hexo s #本地预览
 ```
 这时本地搭建已经完成，可以在本机预览自己的博客了
 
+￼![enter description here][1]
+
 常用的hexo命令：
 
 ``` zsh
@@ -75,47 +73,122 @@ hexo n page "file" #新建文件夹
 hexo clean #清理缓存
 hexo d #部署
 ```
-# 四、部署Hexo至Git
-## 注册Git
-进入[GitHub][1]注册账号后新建一个仓库
+## 5.更换主题##
+可以参照知乎上的一篇文章
+- [有哪些好看的hexo主题-知乎](https://www.zhihu.com/question/24422335 "有哪些好看的hexo主题-知乎")
+在这儿我使用的是
+-[next](https://github.com/iissnan/hexo-theme-next "next")
+在blog目录下输入
+``` zsh
+sudo git clone https://github.com/iissnan/hexo-theme-next.git theme/next
+```
+下载完成后修改blog目录下的_config.yml文件，推荐使用vim
+``` zsh
+sudo apt-get install vim
+vim _config.yml
+```
+找到theme:landscape 在75行左右将其修改为theme:next
+
+``` zsh
+hexo g #生成、编译
+hexo s #预览下更换主题后的博客
+```
+
 ![enter description here][2]
 
-## 配置git公钥相关
 
-``` zsh
-ssh-keygen -C '你的邮箱' -t rsa # 一路回车后会在用户目录～/.ssh/下建立相应的密钥文件
+
+#四、部署Hexo至Git#
+进入[GitHub][3]注册账号后新建一个仓库
+![enter description here][4]
+
+##生成SSH Key 
+```zsh
+ssh-keygen -t rsa -C "邮件地址@youremail.com" #一路回车
+``` 
+##添加SSH Key到GitHub
+```zsh
+cd ~/.ssh #进入保存ssh密钥的目录
 ```
-生成成功后找到 ～/.ssh/目录下的id_rsa.pub文件把内容添加到github账户的profile里，选择SSH KEYS 选项，然后Add SSH Key中。上传成功后，就可以使用下面这条命令。
+找到 id_rsa.pub文件复制文件内容，登陆github 点击右上角的 Settings--->SSH Public keys ---> New SSH key ---> 粘贴key ---> Add SSH key
 
-``` zsh
-ssh -v git@github.com # 测试连接是否畅通，首次连接会要求你输入邮箱及密码
+![enter description here][5]
+##测试连接
+```zsh
+ssh -T git@GitHub.com #不要修改git@GitHub.com
 ```
 
-第一次使用必须要上传一个文件
-## 设置Hexo部署
-在blog目录中找到名为_config.yml的配置文件修改deploy的相关信息
+![enter description here][6]
+yes 回车
 
-``` `stylus`
+![enter description here][7]
+成功
+##首次上传文件至github
+点击右上角 ---> Your profile --->你新建的仓库(blog2) 
+在终端输入以下命令
+```zsh
+git config --global user.email "你的邮箱"
+git config --global user.name "你的名字"
+echo "# blog2" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin git@github.com:GuoKerS/blog2.git #改成你的
+git push -u origin master
+```
+##通过hexo d部署至github
+打开blog目录下的_config.yml 
+```
 deploy:
-  type: git
-  repo: 你的ssh克隆地址
-  branch: master
+    type: git
+    repository: git@github.com:GuoKerS/blog2.git ##改成你的
+    branch: master
 ```
-![enter description here][3]
-修改完成后在blog目录下输入以下命令
+保存,在blog目录下输入以下命令
+```zsh
+sudo cnpm install hexo-deployer-git --save #安装所需插件
+hexo clean
+hexo g
+hexo d
+```
+然后找到 setting ---> GitHub Pages
 
-``` `zsh`
-sudo cnpm install hexo-deployer-git --save #安装hexo-deployer-git插件
-hexo clean #清理缓存
-hexo g #生成文件
-hexo d #部署
+![enter description here][8]
+
+
+![enter description here][9]
+修改成如上图后点击保存（之后绑定域名也将会在这儿设置）
+部署完成后访问 https://你的id.github.io/blog2 即可
+
+#绑定域名
+添加解析
+
+![enter description here][10]
+添加完成后 进入github 点击blog2 找到 setting ---> GitHub Pages
+在Custom domain 出输入你要绑定域名
+
+![enter description here][11]
+然后回到终端，我们需要创建CNAME文件才能使得域名成功解析，输入以下命令
+```zsh
+echo "你的域名" >> CNAME
+git init
+git add CNAME 
+git commit -m "first commit"
+git push -u origin master
 ```
 
-
-# 五、Hexo设置主题
- 
+上传完成，至此你的hexo博客已经初步搭建完成并运行与互联网上了，后续有机会的话将会说一说，hexo的美化，关于如何书写文章，请参照markdown以及baidu
 
 
-  [1]: http://github.com
-  [2]: http://owd8lsn77.bkt.clouddn.com//images/1505631092291.jpg
-  [3]: owd8lsn77.bkt.clouddn.com/blog/Hexo+GitHub%20Pages%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/1505667297281.jpg
+  [1]: ./images/1506582186807.jpg
+  [2]: ./images/1506582209370.jpg
+  [3]: http://github.com
+  [4]: http://owd8lsn77.bkt.clouddn.com//images/1505631092291.jpg
+  [5]: ./images/1506582234868.jpg
+  [6]: ./images/1506582242279.jpg
+  [7]: ./images/1506582248572.jpg
+  [8]: ./images/1506582284693.jpg
+  [9]: ./images/1506582292040.jpg
+  [10]: ./images/1506582305834.jpg
+  [11]: ./images/1506582326678.jpg
+  
