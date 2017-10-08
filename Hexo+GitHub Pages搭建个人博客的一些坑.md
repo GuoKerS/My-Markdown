@@ -7,11 +7,11 @@ title: Hexo+GitHub Pages搭建个人博客的一些坑
 ---
 
 ----------
-#一、前言#
+# 一、前言#
 由于之前使用的都是免费博客，一段时间又不经常更新导致博客已失效。考虑到能够折腾的种种因素，最终跟风的选择了Hexo来搭建博客，共耗时2天。写下此文的目的是为了记录下我搭建过程中解决的一些坑，给需要的同学做个参考。
 
 
-#二、准备工作#
+# 二、准备工作#
 先说下搭建Hexo的完整流程：
 1.环境准备
 2.安装Node.js、Git、Npm、Hexo
@@ -19,22 +19,22 @@ title: Hexo+GitHub Pages搭建个人博客的一些坑
 4.部署至Github Pages
 
 本机环境：Ubuntu 
-#三、系统环境配置#
+# 三、系统环境配置#
 
-##1. 安装Git##
+## 1. 安装Git
 
 ``` zsh?linenums
 sudo apt-get install git #安装github
 git --version #显示git版本
 ```
-## 2. 安装Node.js##
+## 2. 安装Node.js
 
 ``` zsh
 sudo apt-get install nodejs #安装node.js
 nodejs -v #显示版本信息
 ```
 
-## 3. 安装Npm（Cnpm）##
+## 3. 安装Npm（Cnpm）
 
 ``` zsh
 sudo apt-get install npm #安装.......
@@ -49,7 +49,7 @@ sudo n stable #升级node.js
 sudo npm install cnpm -g --registry=https://registry.npm.taobao.org #安装cnpm
 ```
 
-## 4. 安装Hexo##
+## 4. 安装Hexo
  
 ``` zsh
 mkdir hexo #创建hexo目录
@@ -73,7 +73,7 @@ hexo n page "file" #新建文件夹
 hexo clean #清理缓存
 hexo d #部署
 ```
-## 5.更换主题##
+## 5.更换主题
 可以参照知乎上的一篇文章
 - [有哪些好看的hexo主题-知乎](https://www.zhihu.com/question/24422335 "有哪些好看的hexo主题-知乎")
 在这儿我使用的是
@@ -98,22 +98,22 @@ hexo s #预览下更换主题后的博客
 
 
 
-#四、部署Hexo至Git#
+# 四、部署Hexo至Git#
 进入[GitHub][3]注册账号后新建一个仓库
 ![enter description here][4]
 
-##生成SSH Key 
+## 生成SSH Key 
 ```zsh
 ssh-keygen -t rsa -C "邮件地址@youremail.com" #一路回车
 ``` 
-##添加SSH Key到GitHub
+## 添加SSH Key到GitHub
 ```zsh
 cd ~/.ssh #进入保存ssh密钥的目录
 ```
 找到 id_rsa.pub文件复制文件内容，登陆github 点击右上角的 Settings--->SSH Public keys ---> New SSH key ---> 粘贴key ---> Add SSH key
 
 ![enter description here][5]
-##测试连接
+## 测试连接
 ```zsh
 ssh -T git@GitHub.com #不要修改git@GitHub.com
 ```
@@ -135,7 +135,7 @@ git commit -m "first commit"
 git remote add origin git@github.com:GuoKerS/blog2.git #改成你的
 git push -u origin master
 ```
-##通过hexo d部署至github
+## 通过hexo d部署至github
 打开blog目录下的_config.yml 
 ```
 deploy:
@@ -159,7 +159,7 @@ hexo d
 修改成如上图后点击保存（之后绑定域名也将会在这儿设置）
 部署完成后访问 https://你的id.github.io/blog2 即可
 
-#绑定域名
+## 绑定域名
 添加解析
 
 ![enter description here][10]
